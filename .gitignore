@@ -1,0 +1,19 @@
+node_modules
+dist
+*.local
+.DS_Store
+storybook-static
+.storybook-out
+*.tsbuildinfo
+node_modules/.tmp
+
+# Logs
+npm-debug.log*
+pnpm-debug.log*
+yarn-error.log*
+storybook.log
+
+# Editor
+.idea
+.vscode/*
+!.vscode/extensions.json

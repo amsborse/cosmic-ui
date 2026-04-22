@@ -1,0 +1,164 @@
+/* Shell: aura + ripples sit outside the <svg> */
+.infinity-graphic-root {
+  position: relative;
+  display: block;
+  width: 100%;
+  border-radius: 8px;
+}
+
+.infinity-graphic-root .infinity-graphic {
+  position: relative;
+  z-index: 1;
+}
+
+/* Root SVG layout + optional light page tint (data-theme is set on the <svg>) */
+.infinity-graphic {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  vertical-align: top;
+}
+
+.infinity-graphic[data-theme='light'] {
+  background: #f0f2fa;
+}
+
+/* Open lemniscate paths must never use default fill (black) — that paints both lobes solid. */
+.infinity-graphic path {
+  fill: none;
+}
+
+.infinity-graphic .path-core,
+.infinity-graphic .path-glow,
+.infinity-graphic .path-depth,
+.infinity-graphic .path-shimmer {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.infinity-graphic .breathe {
+  animation: ig-breathe 7.5s ease-in-out infinite;
+  transform-origin: center;
+}
+
+.infinity-graphic .crossPulse {
+  animation: ig-crossPulse 4.8s ease-in-out infinite;
+  transform-origin: center;
+}
+
+.infinity-graphic .shimmerSweep {
+  animation: ig-shimmerMove 8.8s linear infinite;
+}
+
+@keyframes ig-breathe {
+  0%,
+  100% {
+    opacity: 0.9;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes ig-crossPulse {
+  0%,
+  100% {
+    opacity: 0.26;
+    transform: scale(0.96);
+  }
+  50% {
+    opacity: 0.55;
+    transform: scale(1.04);
+  }
+}
+
+@keyframes ig-shimmerMove {
+  0% {
+    stroke-dashoffset: 1100;
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.22;
+  }
+  35% {
+    opacity: 0.18;
+  }
+  55% {
+    opacity: 0.08;
+  }
+  100% {
+    stroke-dashoffset: -1100;
+    opacity: 0;
+  }
+}
+
+.infinity-graphic-aura {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.6;
+  background: radial-gradient(
+    circle 26% at calc(var(--ig-px, 0.5) * 100%) calc(var(--ig-py, 0.5) * 100%),
+    rgba(150, 120, 255, 0.1),
+    transparent 55%
+  );
+  transition: opacity 240ms ease;
+}
+
+.infinity-graphic-root[data-state='charged'] .infinity-graphic-aura,
+.infinity-graphic-root[data-state='cosmic'] .infinity-graphic-aura {
+  opacity: 0.78;
+}
+
+.infinity-graphic-root[data-theme='light'] .infinity-graphic-aura {
+  background: radial-gradient(
+    circle 28% at calc(var(--ig-px, 0.5) * 100%) calc(var(--ig-py, 0.5) * 100%),
+    rgba(99, 102, 241, 0.09),
+    transparent 58%
+  );
+}
+
+.infinity-graphic-ripple {
+  position: absolute;
+  width: 110px;
+  height: 110px;
+  margin-left: -55px;
+  margin-top: -55px;
+  border-radius: 50%;
+  border: 1px solid rgba(180, 160, 255, 0.4);
+  box-shadow: 0 0 32px rgba(120, 90, 200, 0.18);
+  pointer-events: none;
+  z-index: 2;
+  animation: ig-ripple 720ms ease-out forwards;
+}
+
+@keyframes ig-ripple {
+  0% {
+    opacity: 0.55;
+    transform: scale(0.6);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.8);
+  }
+}
+
+.infinity-graphic .ig-particle {
+  pointer-events: none;
+  transform-origin: center;
+  animation: ig-spark 5.2s ease-in-out calc(var(--ig-i, 0) * 0.21s) infinite;
+}
+
+@keyframes ig-spark {
+  0%,
+  100% {
+    opacity: 0.1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
